@@ -21,36 +21,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 
 class VideoActivity : AppCompatActivity() {
 
-/*
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding = ActivityVideoBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        binding.takeVideoButton.setOnClickListener {
-            dispatchTakeVideoIntent()
-        }
-
-
-    }
-
-    val REQUEST_VIDEO_CAPTURE = 1
-
-    private fun dispatchTakeVideoIntent() {
-        Intent(MediaStore.ACTION_VIDEO_CAPTURE).also { takeVideoIntent ->
-            takeVideoIntent.resolveActivity(packageManager)?.also {
-                startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE)
-            }
-        }
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        val videoView = findViewById<VideoView>(R.id.videoView)
-        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
-            val videoUri: Uri = data?.data!!
-            videoView.setVideoURI(videoUri)
-        }
-    }*/
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +31,7 @@ class VideoActivity : AppCompatActivity() {
 
         requestMultiplePermissions()
 
-
+        //Button click listeners
         binding.takeVideoButton.setOnClickListener {
             takeVideoFromCamera()
         }
@@ -77,8 +48,8 @@ class VideoActivity : AppCompatActivity() {
 
     private val GALLERY = 1
     private val CAMERA = 2
-
     fun chooseVideoFromGallery() {
+        //Opening Gallery
         val galleryIntent = Intent(
             Intent.ACTION_PICK,
             android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI
@@ -88,13 +59,14 @@ class VideoActivity : AppCompatActivity() {
     }
 
     private fun takeVideoFromCamera() {
+        //Opening Camera
         val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
         startActivityForResult(intent, CAMERA)
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         super.onActivityResult(requestCode, resultCode, data)
+        //Choosen media shown on video view
         var videoView = findViewById(R.id.videoView) as VideoView
         videoView.visibility= View.VISIBLE
         if (resultCode == Activity.RESULT_CANCELED) {
